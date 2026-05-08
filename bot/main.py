@@ -15,7 +15,7 @@ dp.include_router(save_router)
 
 @dp.message(Command("start"))
 async def main(message: Message):
-    await message.answer("Hello")
+    await message.answer("Hello!")
 
 async def start():
     print("Bot ready!")
