@@ -6,6 +6,7 @@ from aiogram.client.session.aiohttp import AiohttpSession
 from bot.config import token as bot_token
 
 from bot.save_pass_handler import router as save_router
+from bot.ip_giver import router as ip_router
 
 import asyncio
 
@@ -15,6 +16,7 @@ bot = Bot(token=bot_token, session=session)
 dp = Dispatcher()
 
 dp.include_router(save_router)
+dp.include_router(ip_router)
 
 @dp.message(Command("start"))
 async def main(message: Message):
