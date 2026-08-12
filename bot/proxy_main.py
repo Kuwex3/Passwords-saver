@@ -1,6 +1,4 @@
 import asyncio
-from aiohttp import ClientSession
-from aiohttp_socks import ProxyConnector
 from aiogram import Bot, Dispatcher
 from aiogram.filters.command import Command
 from aiogram.types import Message
@@ -20,14 +18,14 @@ async def main(message: Message):
     await message.answer("Hello")
 
 async def start():
-    connector = ProxyConnector.from_url("socks5://127.0.0.1:1080")
+    session = AiohttpSession(proxy="socks5://127.0.0.1:1080")
+    bot = Bot(token=bot_token, session=session)
     
-    async with ClientSession(connector=connector) as client_session:
-        session = AiohttpSession(session=client_session)
-        bot = Bot(token=bot_token, session=session)
-        
-        print("Bot ready!")
+    print("Bot ready!")
+    try:
         await dp.start_polling(bot)
+    finally:
+        await session.close()
 
 if __name__ == "__main__":
     asyncio.run(start())
